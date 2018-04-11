@@ -20,7 +20,7 @@ class RoomController extends Controller
 
     public function index()
     {
-      return view('welcome', compact('rooms'));
+      return view('welcome');
     }
 
     public function showall()
@@ -32,12 +32,12 @@ class RoomController extends Controller
 
     public function map()
     {
-      $rooms = DB::table('rooms')
+      $units = DB::table('rooms')
         ->select('id', 'postcode', 'street', 'housenumber', 'square_meter', 'price')
           ->get();
 
       $data = [];
-      foreach ($rooms as $r) {
+      foreach ($units as $r) {
         $d[0] = $r->id;
         $d[1] = $r->postcode;
         $d[2] = "<strong>".$r->street." ".$r->housenumber."</strong><br />Oppervlakte: "
@@ -56,7 +56,6 @@ class RoomController extends Controller
       $this->validate(request(), [
         'street' => 'required',
         'housenumber' => 'required|digits_between:1,4',
-        'city_id' => 'required',
         'postcode' => 'required|regex:/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i',
         'square_meter' => 'required|digits_between:1,2',
         'price' => 'required|digits_between:2,4',
@@ -67,7 +66,7 @@ class RoomController extends Controller
       $room = Room::create([
         'street' => request('street'),
         'housenumber' => request('housenumber'),
-        'city_id' => request('city_id'),
+        'city_id' => '1',
         'postcode' => request('postcode'),
         'square_meter' => request('square_meter'),
         'price' => request('price'),
@@ -104,23 +103,18 @@ class RoomController extends Controller
     {
       $room = Room::find($id);
 
-      $cities = City::get();
-
       if ($room->user_id == Auth::id()){
-        return view('edit', compact('room', 'cities', 'id'));
+        return view('edit', compact('room', 'id'));
       } else {
         return redirect('/kamer/'.$id);
       }
     }
-
-
 
     public function update(UploadRequest $request, $id)
     {
       $this->validate(request(), [
         'street' => 'required',
         'housenumber' => 'required|digits_between:1,4',
-        'city_id' => 'required',
         'postcode' => 'required|regex:/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i',
         'square_meter' => 'required|digits_between:1,2',
         'price' => 'required|digits_between:2,4',
@@ -131,7 +125,6 @@ class RoomController extends Controller
       Room::find($id)->update([
         'street' => request('street'),
         'housenumber' => request('housenumber'),
-        'city_id' => request('city_id'),
         'postcode' => request('postcode'),
         'square_meter' => request('square_meter'),
         'price' => request('price'),

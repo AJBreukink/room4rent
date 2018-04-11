@@ -1,4 +1,4 @@
-<h2> @lang('phrases.newRoom')</h2><br>
+<h3> @lang('phrases.newRoom')</h3><br>
 
 <form action="/newroom" method="POST" enctype="multipart/form-data">
   {{ csrf_field() }}
@@ -16,15 +16,6 @@
     <label for="dateavailable">@lang('phrases.available')</label>
     <input type="text" class="form-control" name="date_available" id="datepicker" value="{{ old('date_available') }}">
   </div>
-<!--
-  <div class="form-group">
-    <label for="city">Selecteer stad</label> <br>
-    <select name="city_id">
-      @foreach ($cities as $city)
-        <option value="{{$city->id}}">{{$city->name}}</option>
-      @endforeach
-    </select>
-  </div> -->
 
   <input name=city_id type="hidden" value="1">
 

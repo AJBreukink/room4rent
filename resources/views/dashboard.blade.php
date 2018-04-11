@@ -1,6 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
+@include('layouts.nav')
+
+@include('layouts.navigatie')
+<br>
 <div class="container">
 
       <div class="col-md-8">
@@ -25,6 +29,8 @@
               </div>
               <div class="card-body">
                 @if (Auth::user()->premium == '0')
+                @lang('phrases.upgradenewuser')<br /><br />
+
                 Upgrade je Account:
                 @include('layouts.upgrade')
                 of<br>

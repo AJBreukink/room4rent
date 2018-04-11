@@ -29,8 +29,8 @@ class IDealController extends Controller
       "consumer_name" => $user->name,
       "consumer_email" => $user->email,
       "description" => "Room4Rent: Account Upgrade",
-      "cancel_url" => env("APP_URL")."/dashboard",
-      "return_url" => env("APP_URL")."/upgrade/paymentcomplete/".$user->ideal_code,
+      "cancel_url" => url("/dashboard"),
+      "return_url" => url("/upgrade/paymentcomplete/".$user->ideal_code),
       "remarks" => "user_id: ".auth()->id(),
       "test_mode" => true,
     ));
@@ -40,7 +40,7 @@ class IDealController extends Controller
     if(isset($response)){
       return redirect($response['return']['payment_url']);
     } else {
-      return redirect(env("APP_URL")."/dashboard")
+      return redirect("/dashboard")
         ->with('alert', 'Something went wrong; we have redirected you back.');
     }
 
@@ -54,11 +54,11 @@ class IDealController extends Controller
       User::where('id', Auth::id())
           ->update(['premium' => 1]);
 
-      return redirect(env("APP_URL")."/dashboard")
+      return redirect("/dashboard")
         ->with('success','Account upgrade voltooid!
         Je kan nu van alle functionaliteit van onze site gebruik maken.');
     } else {
-      return redirect(env("APP_URL")."/dashboard")
+      return redirect("/dashboard")
         ->with('alert', 'Something went wrong; Check your bank account.
         If your payment went through but your account hasn\'t upgraded,
         pleaase contact us.');
