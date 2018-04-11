@@ -8,9 +8,9 @@ De vraag naar kamers in Groningen wordt steeds groter. Dat biedt kansen voor ond
 ## Team room4rent
 
 Arend-Jan Breukink
-Backend
-Sociaal
-Innovator
+- Backend
+- Sociaal
+- Innovator
 
 Thijs Vunderink
 - User Interface
